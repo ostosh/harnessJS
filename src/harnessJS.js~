@@ -33,35 +33,26 @@
   * @constructor
   */
   var Subject = function() {
-  	  
     /** @private {!document.documentElement} */
     this.subjectDom_;
-    
     /** @private {boolean} */
     this.readyState_ = false;
-    
     /** @private {boolean} */
     this.built_ = false;
-    
   };
 
   /**
   * Binds a subjectDom to Subject instance. 
   *
-  * @param {!document.documentElement} subjectDom The application root DOM node 
-  *   to be used for purposes of testing.
+  * @param {!document.documentElement} subjectDom The application root DOM node to be used for purposes of testing.
   */
-  Subject.prototype.init = function( uri, container ) {
-  	console.log(typeof uri !== 'string ' );
-    if( typeof uri !== 'string' )
+  Subject.prototype.usingUri = function( uri ) {
+    if(!uri)
       throw "Error: invalid uri.";
 
     var iframe = document.createElement( 'iframe' );
     iframe.src = uri;
-    if( container instanceof Element )
-      container.appendChild( iframe );
-    else
-      document.body.appendChild( iframe );
+    document.body.appendChild( iframe );
     this.subjectDom_ = iframe;
   };
 
@@ -92,7 +83,7 @@
   };
 
   /**
-  * Bind readyState event handlers a newly created Subject instance.
+  * Bind readyState event handlers a newly created sestSubject instance.
   * 
   * @invariant Ready State handlers have not already been bound
   * @invariant Subject instance subjectDom_ field is set with Subject.usingUri
@@ -116,12 +107,11 @@
   /**
   * Sets the URI of a html resource to include as a test subject. 
   *
-  * @param {string} nameSpace The name of a name space object at subject 
-  *   application's global scope.
+  * @param {string} nameSpace The name of a name space object at subject application's global scope.
   * @return {Object} The namespace found.
   */
   Subject.prototype.getChildContext = function( nameSpace ) {
-    if ( typeof nameSpace !== 'string' )
+    if ( !nameSpace )
       throw "Error: given nameSpace of <" + nameSpace + "> invalid.";
     if(this.subjectDom_.contentWindow[ nameSpace ] === undefined)
       throw "Error: given nameSpace of <" + nameSpace + "> not found in subject's global scope.";
@@ -129,15 +119,12 @@
   };
 
   /**
-  * Blocks execution until Subject instance's ready state is true or optional 
-  *   promise returns true.
+  * Blocks execution until Subject instance's ready state is true or optional promise returns true.
   *
-  * @param {function} func Optional callback to be executed when blocking 
-  *   condition is resolved.
-  * @param {function} promise Optional polling function that will override the 
-  *   Subject instance's ready state. Function must eventually resolve to true.
-  * @return {Object} Return value of the optional callback given. Otherwise, the 
-  *   Subject instance's ready state.
+  * @param {function} func Optional callback to be executed when blocking condition is resolved.
+  * @param {function} promise Optional polling function that will override the Subject instance's ready state.
+  *        Function must eventually resolve to true.
+  * @return {Object} Return value of the optional callback given. Otherwise, the estSubject instance's ready state.
   */
   Subject.prototype.wait = function ( func, promise ){
     var ts = this;
@@ -161,8 +148,7 @@
   /**
   * Executes given callback function when Subject instance's ready state is true.
   *
-  * @param {function} func Callback to be executed when instance's ready state 
-  *   is true.
+  * @param {function} func Callback to be executed when instance's ready state is true.
   * @return {Object} Return value of the optional callback given.
   */
   Subject.prototype.executeFunction = function(func) {
@@ -178,63 +164,47 @@
   * @constructor
   */
   var Builder = function() {
-    /** @private {boolean} */
-    this.isBuilt_;
-    
-    /** @private {String} */
+    /** @private {string} */
     this.uri_ = '';
 
-    /** @private {Element} */
-    this.container_;
+    /** @private {boolean} */
+    this.isBuilt_;
 
-    /** @private {String} */
-    this.style_ = '';
+    /** @private {string} */
+    this.style_;
  
     /** @private {!Subject} */
     this.subject_;
   };
 
   /**
-  * Sets the resource to create Subject with. 
+  * Sets the uri of a html resource to include as a test subject. 
   *
   * @param {string} uri The relative path of a html resource to load.
   */
-  Builder.prototype.usingResource = function( uri ) {
-    if( typeof uri_ !== 'string' || !builderUtils.resourceExists( uri ) )
+  Builder.prototype.usingResource = function(uri) {
+    if( typeof this.uri_ !== 'string' || !builderUtils.resourceExists( uri ) )
       throw "Error: given uri <"+uri+"> not found.";
     this.uri_ = uri;
-  };
-  
-  /**
-  * Sets container to bind the Subject to. 
-  *
-  * @param {Element} element container to bind the Subject to.
-  */
-  Builder.prototype.usingContainer = function( element ) {
-    if( !( element instanceof Element ) )
-      throw "Error: invalid container element ";
-    this.container_ = element;
+    delete uri;
   };
 
   /**
-  * Sets the style of a Subject element. 
+  * Sets the style of a subject application's root container documentElement. 
   *
-  * @param {string} style The string representation of one or more inline CSS 
-  *   styles to include.
+  * @param {string} style The string representation of one or more inline CSS styles to include.
   */
   Builder.prototype.usingStyle= function(style) {
   //TODO style implementation
-    if(typeof style_ !== 'string' )
+    if(!style)
       throw "Error: given style <" + style + "> is invalid.";
     this.style_ = style;
   };
 
   /**
-  * Create instance of Subject bound with application bound under child 
-  *   documentElement. 
+  * Create instance of Subject bound with application bound under child documentElement. 
   *
-  * @invariant Instance of Builder has not already been used to build a instance 
-  *   of Subject
+  * @invariant Instance of Builder has not already been used to build a instance of Subject
   * @return {!Subject} The namespace found.
   */
   Builder.prototype.buildSubject = function() {
@@ -242,7 +212,7 @@
       throw "Error: subject instance can only be used to build one subject";
  
     var subject = new Subject();
-    subject.init( this.uri_, this.container_ );
+    subject.usingUri(this.uri_);
     subject.bindReadyStateHandlers();
     this.isBuilt_ = true;
     return subject;
