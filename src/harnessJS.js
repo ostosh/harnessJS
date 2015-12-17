@@ -1,4 +1,4 @@
-(function(harness) {
+(function( window ) {
 
   /**
   * Creates new {@link BuilderUtils} instances.
@@ -251,7 +251,7 @@
   window.harness = Builder;
 
 
-}(window.harness = window.harness || {}));
+}( window ));
 
 
 
