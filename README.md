@@ -10,4 +10,5 @@ harnessJS is a JavaScript framework for managing iframes. Documentation, guides 
 3. Add the following to your HTML resource
 ```html
 <script type="text/javascript" src="harnessJS/src/harnessJS.js"></script>
-'''
+
+```
