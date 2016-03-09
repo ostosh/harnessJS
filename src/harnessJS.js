@@ -223,7 +223,6 @@
   *   styles to include.
   */
   Builder.prototype.usingStyle= function(style) {
-  //TODO style implementation
     if(typeof style_ !== 'string' )
       throw "Error: given style <" + style + "> is invalid.";
     this.style_ = style;
