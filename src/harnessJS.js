@@ -48,11 +48,10 @@
   /**
   * Binds a subjectDom to Subject instance. 
   *
-  * @param {!document.documentElement} subjectDom The application root DOM node 
-  *   to be used for purposes of testing.
+  * @param {string} uri The relative path of a html resource to load.
+  * @param {Element} container DOM node to bind iframe subject to.
   */
   Subject.prototype.init = function( uri, container ) {
-  	console.log(typeof uri !== 'string ' );
     if( typeof uri !== 'string' )
       throw "Error: invalid uri.";
 
