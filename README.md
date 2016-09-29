@@ -8,20 +8,18 @@ harnessJS is a JavaScript framework for managing iframes. Documentation, guides 
 1. Download the src code
 2. Import the module into your application
 ```html
-<script type="text/javascript" src="harnessJS.js"></script>
+<script type="text/javascript" src="harness.js"></script>
 ```
 
 ### Public API:
 
-[Builder](harnessJS.js#L174): builds instances of [Subject](harnessJS.js#L30) iframe.
+[Builder](harnessJS.js#L174): builds instances of [Subject](harness.js#L30) iframe.
 
-   + [usingResource](harnessJS.js#L196)
+   + [usingResource](harnessJS.js#L193)
 
-   + [usingContainer](harnessJS.js#L207)
+   + [usingContainer](harnessJS.js#L204)
 
-   + [usingStyle](harnessJS.js#L218)
-
-   + [buildSubject](harnessJS.js#L230)
+   + [buildSubject](harnessJS.js#L215)
 
 [Subject](harnessJS.js#L30): subject iframe.
 
