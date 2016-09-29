@@ -185,9 +185,6 @@
 
     /** @private {Element} */
     this.container_;
-
-    /** @private {String} */
-    this.style_ = '';
  
     /** @private {!Subject} */
     this.subject_;
@@ -213,18 +210,6 @@
     if( !( element instanceof Element ) )
       throw "Error: invalid container element ";
     this.container_ = element;
-  };
-
-  /**
-  * Sets the style of a Subject element. 
-  *
-  * @param {string} style The string representation of one or more inline CSS 
-  *   styles to include.
-  */
-  Builder.prototype.usingStyle= function(style) {
-    if(typeof style_ !== 'string' )
-      throw "Error: given style <" + style + "> is invalid.";
-    this.style_ = style;
   };
 
   /**
